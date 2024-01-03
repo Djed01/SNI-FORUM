@@ -1,0 +1,8 @@
+package org.unibl.etf.forum.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.unibl.etf.forum.models.entities.UserEntity;
+
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+    UserEntity findByUsername(String username);
+}
