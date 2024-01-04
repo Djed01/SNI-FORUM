@@ -7,11 +7,12 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@jakarta.persistence.Table(name = "comment", schema = "forum", catalog = "")
+@Table(name = "comment", schema = "forum", catalog = "")
 public class CommentEntity {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @jakarta.persistence.Column(name = "ID")
+    @Column(name = "ID")
     private Integer id;
 
     @Basic
@@ -19,7 +20,7 @@ public class CommentEntity {
     private Integer topicId;
 
     @Basic
-    @Column(name = "USER_ID")
+    @Column(name = "UserID")
     private Integer userId;
 
     @Basic
@@ -33,5 +34,13 @@ public class CommentEntity {
     @Basic
     @Column(name = "Status")
     private Boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "TopicID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
+    private TopicEntity topic;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
+    private UserEntity user;
 
 }

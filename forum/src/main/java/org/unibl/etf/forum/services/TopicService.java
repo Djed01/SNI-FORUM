@@ -6,27 +6,31 @@ import org.springframework.stereotype.Service;
 import org.unibl.etf.forum.repositories.TopicRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopicService {
 
-    @Autowired
-    private TopicRepository topicRepository;
+    private final TopicRepository topicRepository;
 
-    public List<TopicEntity> findAll() {
+    @Autowired
+    public TopicService(TopicRepository topicRepository) {
+        this.topicRepository = topicRepository;
+    }
+
+    public List<TopicEntity> findAllTopics() {
         return topicRepository.findAll();
     }
 
-    public TopicEntity findById(Integer id) {
-        return topicRepository.findById(id).orElse(null);
+    public Optional<TopicEntity> findTopicById(Integer id) {
+        return topicRepository.findById(id);
     }
 
-    public TopicEntity save(TopicEntity topic) {
+    public TopicEntity saveTopic(TopicEntity topic) {
         return topicRepository.save(topic);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteTopic(Integer id) {
         topicRepository.deleteById(id);
     }
-
 }

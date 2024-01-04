@@ -1,34 +1,38 @@
 package org.unibl.etf.forum.services;
 
+import org.unibl.etf.forum.models.entities.UserEntity;
 import org.unibl.etf.forum.models.entities.UserPermissionEntity;
-import org.unibl.etf.forum.models.entities.UserPermissionEntityPK;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.forum.repositories.UserPermissionRepository;
+import org.unibl.etf.forum.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserPermissionService {
 
+    private final UserPermissionRepository userPermissionRepository;
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserPermissionRepository userPermissionRepository;
-
-    public List<UserPermissionEntity> findAll() {
-        return userPermissionRepository.findAll();
+    public UserPermissionService(UserPermissionRepository userPermissionRepository, UserRepository userRepository) {
+        this.userPermissionRepository = userPermissionRepository;
+        this.userRepository = userRepository;
     }
 
-    public UserPermissionEntity findById(UserPermissionEntityPK id) {
-        return userPermissionRepository.findById(id).orElse(null);
+    public List<UserPermissionEntity> findByUserId(Integer userId) {
+        return userPermissionRepository.findByUserId(userId);
     }
 
-    public UserPermissionEntity save(UserPermissionEntity userPermission) {
-        return userPermissionRepository.save(userPermission);
+    public List<UserPermissionEntity> findByTopicId(Integer topicId) {
+        return userPermissionRepository.findByTopicId(topicId);
     }
 
-    public void deleteById(UserPermissionEntityPK id) {
-        userPermissionRepository.deleteById(id);
+    public List<UserPermissionEntity> findByUsername(String username) {
+        UserEntity user = userRepository.findByUsername(username);
+        return user != null ? userPermissionRepository.findByUserId(user.getId()) : List.of();
     }
-
-    // Add more methods based on requirements
 }

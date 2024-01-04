@@ -12,54 +12,54 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @GetMapping("/")
-    public List<UserEntity> getAllUsers() {
-        return userService.findAll();
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
+        return ResponseEntity.ok(userService.findAllUsers());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id) {
-        UserEntity user = userService.findById(id);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        }
-        return ResponseEntity.notFound().build();
+        return userService.findUserById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/username/{username}")
     public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
-        UserEntity user = userService.findByUsername(username);
-        if (user != null) {
-            return ResponseEntity.ok(user);
+        UserEntity user = userService.findUserByUsername(username);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/")
-    public UserEntity createUser(@RequestBody UserEntity user) {
-        return userService.save(user);
+    @PostMapping
+    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
+        return ResponseEntity.ok(userService.saveUser(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserEntity userDetails) {
-        UserEntity user = userService.findById(id);
-        if (user != null) {
-            // Update the properties of user with userDetails
-            return ResponseEntity.ok(userService.save(user));
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserEntity user) {
+        if (!userService.findUserById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        user.setId(id);
+        return ResponseEntity.ok(userService.saveUser(user));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
-        if (userService.findById(id) != null) {
-            userService.deleteById(id);
-            return ResponseEntity.ok().build();
+        if (!userService.findUserById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build();
     }
-
 }

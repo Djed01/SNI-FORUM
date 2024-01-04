@@ -1,7 +1,6 @@
 package org.unibl.etf.forum.controllers;
 
 import org.unibl.etf.forum.models.entities.UserPermissionEntity;
-import org.unibl.etf.forum.models.entities.UserPermissionEntityPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,38 +12,25 @@ import java.util.List;
 @RequestMapping("/api/userPermissions")
 public class UserPermissionController {
 
+    private final UserPermissionService userPermissionService;
+
     @Autowired
-    private UserPermissionService userPermissionService;
-
-    @GetMapping("/")
-    public List<UserPermissionEntity> getAllUserPermissions() {
-        return userPermissionService.findAll();
+    public UserPermissionController(UserPermissionService userPermissionService) {
+        this.userPermissionService = userPermissionService;
     }
 
-    @GetMapping("/{permissionId}/{userId}")
-    public ResponseEntity<UserPermissionEntity> getUserPermissionById(@PathVariable Integer permissionId, @PathVariable Integer userId) {
-        UserPermissionEntityPK id = new UserPermissionEntityPK(permissionId, userId);
-        UserPermissionEntity userPermission = userPermissionService.findById(id);
-        if (userPermission != null) {
-            return ResponseEntity.ok(userPermission);
-        }
-        return ResponseEntity.notFound().build();
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<UserPermissionEntity>> getPermissionsByUserId(@PathVariable Integer userId) {
+        return ResponseEntity.ok(userPermissionService.findByUserId(userId));
     }
 
-    @PostMapping("/")
-    public UserPermissionEntity createUserPermission(@RequestBody UserPermissionEntity userPermission) {
-        return userPermissionService.save(userPermission);
+    @GetMapping("/topic/{topicId}")
+    public ResponseEntity<List<UserPermissionEntity>> getPermissionsByTopicId(@PathVariable Integer topicId) {
+        return ResponseEntity.ok(userPermissionService.findByTopicId(topicId));
     }
 
-    @DeleteMapping("/{permissionId}/{userId}")
-    public ResponseEntity<?> deleteUserPermission(@PathVariable Integer permissionId, @PathVariable Integer userId) {
-        UserPermissionEntityPK id = new UserPermissionEntityPK(permissionId, userId);
-        if (userPermissionService.findById(id) != null) {
-            userPermissionService.deleteById(id);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    @GetMapping("/username/{username}")
+    public ResponseEntity<List<UserPermissionEntity>> getPermissionsByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userPermissionService.findByUsername(username));
     }
-
-    // Add additional endpoints as needed
 }
