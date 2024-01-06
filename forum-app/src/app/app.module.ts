@@ -5,20 +5,45 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { TopicListComponent } from './topic-list/topic-list.component';
-import { CommentSectionComponent } from './comment-section/comment-section.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { RegisterComponent } from './register/register.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommentListComponent } from './comment-list/comment-list.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { VerificationCodeComponent } from './verification-code/verification-code.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     TopicListComponent,
-    CommentSectionComponent
+    CommentListComponent,
+    RegisterComponent,
+    CommentListComponent,
+    VerificationCodeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    MatCardModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

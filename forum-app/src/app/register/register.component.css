@@ -25,3 +25,7 @@
     font-size: 1.1em; /* Larger text on the button */
   }
   
+  .warning {
+    color: #d32f2f; /* Red color for warning messages */
+    margin-top: 10px;
+  }

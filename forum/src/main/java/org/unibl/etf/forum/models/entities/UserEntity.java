@@ -28,8 +28,7 @@ public class UserEntity {
     @Basic
     @Column(name = "Role")
     private String role;
-    @OneToMany(mappedBy = "user")
-    private List<CommentEntity> comments;
+
     @OneToMany(mappedBy = "user")
     private List<UserPermissionEntity> userPermissions;
 

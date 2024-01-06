@@ -16,9 +16,9 @@ public class TopicEntity {
     @Basic
     @Column(name = "Name")
     private String name;
-    @OneToMany(mappedBy = "topic")
+    @OneToMany(mappedBy = "topicId")
     private List<CommentEntity> commentsById;
-    @OneToMany(mappedBy = "topic")
+    @OneToMany(mappedBy = "topicId")
     private List<UserPermissionEntity> userPermissionsById;
 
 }

@@ -1,0 +1,15 @@
+<div class="verification-container">
+    <mat-card class="verification-card">
+      <mat-card-title>Enter Verification Code</mat-card-title>
+      <mat-card-content>
+        <form (submit)="onSubmit()">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Verification Code</mat-label>
+            <input matInput [(ngModel)]="code" name="code" required>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" class="verify-button">Verify</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

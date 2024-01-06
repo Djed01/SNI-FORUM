@@ -1,0 +1,19 @@
+.verification-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 95vh;
+  }
+  
+  .verification-card {
+    max-width: 400px;
+    margin: 2em;
+    padding: 2em;
+  }
+  
+  .form-field,
+  .verify-button {
+    width: 100%;  
+    margin-bottom: 16px;  
+  }
+  

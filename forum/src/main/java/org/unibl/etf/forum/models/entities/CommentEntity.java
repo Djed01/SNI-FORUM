@@ -35,9 +35,6 @@ public class CommentEntity {
     @Column(name = "Status")
     private Boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "TopicID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
-    private TopicEntity topic;
 
     @ManyToOne
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
