@@ -24,3 +24,39 @@ p{
   font-size: 16px;
 }
 
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: white; /* or any color that fits your design */
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* optional: adds a nice shadow effect */
+}
+
+.wrapper-comment{
+  display: flex;
+  flex-direction: row;
+}
+
+.wrapper-comment button{
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+
+.example-full-width{
+  width: 70vw;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

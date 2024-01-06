@@ -1,3 +1,4 @@
+<h1 style="display: flex; align-items: center; justify-content: center;"> {{currentTopicName}}</h1>
 <mat-card class="comment-card"  *ngFor="let comment of comments">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
@@ -8,5 +9,27 @@
     <p>{{ comment.content }}</p>
   </mat-card-content>
 </mat-card>
+
+<div class="comment-form">
+  <div class="wrapper-comment">
+  <mat-form-field class="example-full-width">
+    <textarea matInput placeholder="Write your comment here..." [(ngModel)]="newCommentContent"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="postComment()">Publish</button>
+</div>
+
+  <div class="pagination-controls">
+    <button mat-icon-button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="previous-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="page-number">Page {{currentPage}}</span>
+    <button mat-icon-button (click)="changePage(currentPage + 1)" [disabled]="currentPage * limit >= totalComments" class="next-button">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  
+</div>
+
+
 
 
