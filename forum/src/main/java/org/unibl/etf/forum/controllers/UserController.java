@@ -81,5 +81,14 @@ public class UserController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping("/setRole/{userId}/{role}")
+    public ResponseEntity<UserEntity> setUserRole(@PathVariable Integer userId, @PathVariable String role) {
+        UserEntity user = userService.findUserById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
+        user.setRole(role);
+        UserEntity updatedUser = userService.saveUser(user);
+        return ResponseEntity.ok(updatedUser);
+    }
 
 }

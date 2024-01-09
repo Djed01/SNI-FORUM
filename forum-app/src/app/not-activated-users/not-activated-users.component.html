@@ -12,6 +12,21 @@
             <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
             <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
         </ng-container>
+
+        <ng-container matColumnDef="roleColumn">
+          <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
+          <mat-cell *matCellDef="let user" class="role-container">
+            <mat-form-field appearance="fill" style="margin-top: 5%;">
+              <mat-label>Select Role</mat-label>
+              <mat-select [(ngModel)]="user.role">
+                <mat-option value="User">User</mat-option>              
+                <mat-option value="Moderator">Moderator</mat-option>
+                <mat-option value="Admin">Admin</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
+        
         
         <!-- Permissions Column -->
         <ng-container matColumnDef="sciencePermissions">

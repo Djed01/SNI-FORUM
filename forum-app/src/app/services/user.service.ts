@@ -9,7 +9,6 @@ import { UserPermission } from '../models/permission.model';
 })
 export class UserService {
   private baseUrl = 'http://localhost:8080/api/users';
-  private usersUrl = 'http://localhost:8080/api/users';
   private userPermissionsUrl = 'http://localhost:8080/api/userPermissions';
 
   constructor(private http: HttpClient) {}
@@ -19,11 +18,11 @@ export class UserService {
   }
 
   getInactiveUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.usersUrl}/status/false`);
+    return this.http.get<User[]>(`${this.baseUrl}/status/false`);
   }
 
   updateUserStatus(userId: number, status: boolean): Observable<any> {
-    return this.http.patch(`${this.usersUrl}/${userId}/activate`, { status });
+    return this.http.patch(`${this.baseUrl}/${userId}/activate`, { status });
   }
 
   getUserPermissions(userId: number): Observable<UserPermission[]> {
@@ -44,5 +43,9 @@ export class UserService {
     // Assuming your backend expects a POST request to save multiple permissions at once
     return this.http.post(`${this.userPermissionsUrl}/`, permissions);
   }
-  
+
+  updateUserRole(userId: number, role: string): Observable<User> {
+    const url = `${this.baseUrl}/setRole/${userId}/${role}`;
+    return this.http.put<User>(url, {});
+  }
 }

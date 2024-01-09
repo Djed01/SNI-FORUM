@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
 export class NotActivatedUsersComponent implements OnInit {
   inactiveUsers: User[] = [];
   permissions: { [userId: number]: { [topicId: string]: { add: boolean, edit: boolean, delete: boolean } } } = {};
-  displayedColumns: string[] = ['userName','email', 'sciencePermissions','culturePermissions',
+  displayedColumns: string[] = ['userName','email','roleColumn', 'sciencePermissions','culturePermissions',
   'sportPermissions','musicPermissions', 'activate'];
 
   constructor(private userService: UserService) {}
@@ -36,16 +36,20 @@ export class NotActivatedUsersComponent implements OnInit {
 
 
 
-  activateUser(user: User) {
-    const userPermissions: UserPermission[] = this.constructUserPermissions(user.id);
-    console.log(userPermissions);
-    this.userService.saveUserPermissions(userPermissions).subscribe(() => {
-      // Update user status after saving permissions
+activateUser(user: User) {
+  const userPermissions: UserPermission[] = this.constructUserPermissions(user.id);
+  console.log(userPermissions);
+  this.userService.saveUserPermissions(userPermissions).subscribe(() => {
+    // Call the updateUserRole API
+    this.userService.updateUserRole(user.id, user.role).subscribe(() => {
+      // Update user status after saving role
       this.userService.updateUserStatus(user.id, true).subscribe(() => {
         this.loadInactiveUsers(); // Refresh the list after activation
       });
     });
-  }
+  });
+}
+
 
   constructUserPermissions(userId: number): UserPermission[] {
     let permissionsToSave: UserPermission[] = [];

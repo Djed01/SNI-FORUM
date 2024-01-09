@@ -39,4 +39,6 @@ public class UserPermissionController {
         List<UserPermissionEntity> savedUserPermissions = userPermissionService.saveUserPermissions(userPermissions);
         return ResponseEntity.ok(savedUserPermissions);
     }
+
+
 }

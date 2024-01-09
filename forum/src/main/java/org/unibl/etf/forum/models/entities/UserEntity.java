@@ -1,5 +1,6 @@
 package org.unibl.etf.forum.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class UserEntity {
     @Column(name = "Role")
     private String role;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserPermissionEntity> userPermissions;
 

@@ -22,6 +22,9 @@ import { VerificationCodeComponent } from './verification-code/verification-code
 import { NotActivatedUsersComponent } from './not-activated-users/not-activated-users.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +52,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatToolbarModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
