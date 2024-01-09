@@ -1,5 +1,6 @@
 package org.unibl.etf.forum.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class TopicEntity {
     private String name;
     @OneToMany(mappedBy = "topicId")
     private List<CommentEntity> commentsById;
+    @JsonIgnore
     @OneToMany(mappedBy = "topicId")
     private List<UserPermissionEntity> userPermissionsById;
 

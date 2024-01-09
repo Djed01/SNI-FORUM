@@ -1,0 +1,12 @@
+.permissions-container .checkbox-group {
+    display: flex;
+    flex-wrap: nowrap; 
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 1700px) {
+    .permissions-container .checkbox-group {
+      flex-direction: column; 
+    }
+  }
+  

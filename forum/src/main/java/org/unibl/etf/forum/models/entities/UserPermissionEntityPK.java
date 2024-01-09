@@ -12,11 +12,9 @@ import java.io.Serializable;
 public class UserPermissionEntityPK implements Serializable {
     @Column(name = "UserID")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     @Column(name = "TopicID")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer topicId;
 
 }

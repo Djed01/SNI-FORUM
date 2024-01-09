@@ -5,13 +5,15 @@ import { TopicListComponent } from './topic-list/topic-list.component';
 import { RegisterComponent } from './register/register.component';
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { VerificationCodeComponent } from './verification-code/verification-code.component';
+import { NotActivatedUsersComponent } from './not-activated-users/not-activated-users.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'topics', component: TopicListComponent },
   { path: 'register', component: RegisterComponent},
   { path: 'comments/:topicId', component: CommentListComponent },
-  { path: 'verification', component: VerificationCodeComponent}
+  { path: 'verification', component: VerificationCodeComponent},
+  { path: 'notactivated', component: NotActivatedUsersComponent}
   // Add other routes here
 ];
 

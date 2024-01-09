@@ -37,4 +37,8 @@ public class UserService {
     public UserEntity findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public List<UserEntity> findAllInactiveUsers() {
+        return userRepository.findAllByStatusFalse();
+    }
 }

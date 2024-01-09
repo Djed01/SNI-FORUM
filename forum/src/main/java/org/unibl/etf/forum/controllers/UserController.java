@@ -62,4 +62,24 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/status/false")
+    public ResponseEntity<List<UserEntity>> getAllInactiveUsers() {
+        List<UserEntity> inactiveUsers = userService.findAllInactiveUsers();
+        return ResponseEntity.ok(inactiveUsers);
+    }
+
+    // In UserController.java
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PatchMapping("/{id}/activate")
+    public ResponseEntity<UserEntity> activateUser(@PathVariable Integer id) {
+        return userService.findUserById(id)
+                .map(user -> {
+                    user.setStatus(true);
+                    userService.saveUser(user);
+                    return ResponseEntity.ok(user);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

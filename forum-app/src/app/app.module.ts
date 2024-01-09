@@ -19,6 +19,9 @@ import { CommentListComponent } from './comment-list/comment-list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { VerificationCodeComponent } from './verification-code/verification-code.component';
+import { NotActivatedUsersComponent } from './not-activated-users/not-activated-users.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { VerificationCodeComponent } from './verification-code/verification-code
     CommentListComponent,
     RegisterComponent,
     CommentListComponent,
-    VerificationCodeComponent
+    VerificationCodeComponent,
+    NotActivatedUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,9 @@ import { VerificationCodeComponent } from './verification-code/verification-code
     MatListModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

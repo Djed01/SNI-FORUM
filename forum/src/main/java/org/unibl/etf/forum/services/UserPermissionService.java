@@ -1,15 +1,14 @@
 package org.unibl.etf.forum.services;
 
 import org.unibl.etf.forum.models.entities.UserEntity;
-import org.unibl.etf.forum.models.entities.UserPermissionEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.unibl.etf.forum.models.entities.UserPermissionEntity;
 import org.unibl.etf.forum.repositories.UserPermissionRepository;
 import org.unibl.etf.forum.repositories.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserPermissionService {
@@ -35,4 +34,11 @@ public class UserPermissionService {
         UserEntity user = userRepository.findByUsername(username);
         return user != null ? userPermissionRepository.findByUserId(user.getId()) : List.of();
     }
+
+    // In UserPermissionService.java
+    public List<UserPermissionEntity> saveUserPermissions(List<UserPermissionEntity> userPermissions) {
+        // Directly use saveAll method provided by JpaRepository
+        return userPermissionRepository.saveAll(userPermissions);
+    }
+
 }

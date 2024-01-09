@@ -1,9 +1,9 @@
 package org.unibl.etf.forum.controllers;
 
-import org.unibl.etf.forum.models.entities.UserPermissionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.unibl.etf.forum.models.entities.UserPermissionEntity;
 import org.unibl.etf.forum.services.UserPermissionService;
 
 import java.util.List;
@@ -32,5 +32,11 @@ public class UserPermissionController {
     @GetMapping("/username/{username}")
     public ResponseEntity<List<UserPermissionEntity>> getPermissionsByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userPermissionService.findByUsername(username));
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/")
+    public ResponseEntity<List<UserPermissionEntity>> addUserPermissions(@RequestBody List<UserPermissionEntity> userPermissions) {
+        List<UserPermissionEntity> savedUserPermissions = userPermissionService.saveUserPermissions(userPermissions);
+        return ResponseEntity.ok(savedUserPermissions);
     }
 }
