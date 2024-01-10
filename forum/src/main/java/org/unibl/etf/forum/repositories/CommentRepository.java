@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
-    List<CommentEntity> findByTopicId(Integer topicId);
+    List<CommentEntity> findByTopicIdAndStatusTrue(Integer topicId);
+    List<CommentEntity> findByTopicIdAndStatusFalse(Integer topicId);
 }

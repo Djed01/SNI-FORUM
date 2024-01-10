@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { VerificationCodeComponent } from './verification-code/verification-code.component';
 import { NotActivatedUsersComponent } from './not-activated-users/not-activated-users.component';
+import { CommentRequestsComponent } from './comment-requests/comment-requests.component'; 
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'comments/:topicId', component: CommentListComponent },
   { path: 'verification', component: VerificationCodeComponent},
-  { path: 'notactivated', component: NotActivatedUsersComponent}
+  { path: 'notactivated', component: NotActivatedUsersComponent},
+  { path: 'comments/requests/:topicId', component: CommentRequestsComponent}
   // Add other routes here
 ];
 

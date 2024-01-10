@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -57,10 +58,30 @@ public class CommentController {
 
     @GetMapping("/topic/{topicId}")
     public ResponseEntity<List<CommentEntity>> getCommentsByTopic(@PathVariable Integer topicId) {
-        List<CommentEntity> comments = commentService.findCommentsByTopic(topicId);
-        if (comments.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        List<CommentEntity> comments = commentService.findCommentsByTopicWithStatusTrue(topicId);
         return ResponseEntity.ok(comments);
     }
+
+    @GetMapping("/topic/{topicId}/falseStatus")
+    public ResponseEntity<List<CommentEntity>> getCommentsByTopicWithFalseStatus(@PathVariable Integer topicId) {
+        List<CommentEntity> comments = commentService.findCommentsByTopicWithStatusFalse(topicId);
+        return ResponseEntity.ok(comments);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping("/{id}/status/true")
+    public ResponseEntity<CommentEntity> changeStatusToTrue(@PathVariable Integer id) {
+        Optional<CommentEntity> commentOptional = commentService.findCommentById(id);
+
+        if (commentOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CommentEntity comment = commentOptional.get();
+        comment.setStatus(true);
+        CommentEntity updatedComment = commentService.saveComment(comment);
+        return ResponseEntity.ok(updatedComment);
+    }
+
+
 }

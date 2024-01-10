@@ -24,6 +24,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CommentRequestsComponent } from './comment-requests/comment-requests.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     CommentListComponent,
     VerificationCodeComponent,
-    NotActivatedUsersComponent
+    NotActivatedUsersComponent,
+    CommentRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     MatTableModule,
     MatCheckboxModule,
     MatSelectModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

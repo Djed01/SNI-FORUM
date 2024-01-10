@@ -34,7 +34,11 @@ public class CommentService {
         commentRepository.deleteById(id);
     }
 
-    public List<CommentEntity> findCommentsByTopic(Integer topicId) {
-        return commentRepository.findByTopicId(topicId);
+    public List<CommentEntity> findCommentsByTopicWithStatusTrue(Integer topicId) {
+        return commentRepository.findByTopicIdAndStatusTrue(topicId);
+    }
+
+    public List<CommentEntity> findCommentsByTopicWithStatusFalse(Integer topicId) {
+        return commentRepository.findByTopicIdAndStatusFalse(topicId);
     }
 }
