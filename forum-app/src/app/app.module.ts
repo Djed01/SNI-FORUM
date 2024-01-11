@@ -26,6 +26,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CommentRequestsComponent } from './comment-requests/comment-requests.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 
 @NgModule({
@@ -58,7 +60,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCheckboxModule,
     MatSelectModule,
     NoopAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
