@@ -1,30 +1,45 @@
 <div class="main-container">
-    <mat-card class="login-card">
-      <mat-card-title>Register</mat-card-title>
-      <mat-card-content>
-        <form (ngSubmit)="register()">
-          <mat-form-field appearance="fill">
-            <mat-label>Username</mat-label>
-            <input matInput [(ngModel)]="username" name="username" required>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" [(ngModel)]="email" name="email" required>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" [(ngModel)]="password" name="password" required>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Verify Password</mat-label>
-            <input matInput type="password" [(ngModel)]="verifyPassword" name="verifyPassword" required>
-          </mat-form-field>
-          <div *ngIf="password && verifyPassword && password !== verifyPassword" class="warning">
-            Passwords do not match!
-          </div>
-          <button mat-raised-button color="primary" type="submit">Register</button>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+  <mat-card class="login-card">
+    <mat-card-title>Register</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="register()" #registerForm="ngForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="username" name="username" required minlength="3">
+          <mat-error *ngIf="registerForm.controls['username']?.errors?.['required']">
+            Username is required
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls['username']?.errors?.['minlength']">
+            Username must be at least 3 characters long
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" [(ngModel)]="email" name="email" required email>
+          <mat-error *ngIf="registerForm.controls['email']?.errors?.['email']">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" [(ngModel)]="password" name="password" required minlength="6">
+          <mat-error *ngIf="registerForm.controls['password']?.errors?.['required']">
+            Password is required
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls['password']?.errors?.['minlength']">
+            Password must be at least 6 characters long
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Verify Password</mat-label>
+          <input matInput type="password" [(ngModel)]="verifyPassword" name="verifyPassword" required>
+        </mat-form-field>
+        <div *ngIf="password && verifyPassword && password !== verifyPassword" class="warning">
+          Passwords do not match!
+        </div>
+        <button mat-raised-button color="primary" type="submit" 
+          [disabled]="!registerForm.valid || password !== verifyPassword">Register</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
