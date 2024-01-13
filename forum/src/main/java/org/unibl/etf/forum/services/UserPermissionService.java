@@ -9,6 +9,7 @@ import org.unibl.etf.forum.repositories.UserPermissionRepository;
 import org.unibl.etf.forum.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserPermissionService {
@@ -30,10 +31,10 @@ public class UserPermissionService {
         return userPermissionRepository.findByTopicId(topicId);
     }
 
-    public List<UserPermissionEntity> findByUsername(String username) {
-        UserEntity user = userRepository.findByUsername(username);
-        return user != null ? userPermissionRepository.findByUserId(user.getId()) : List.of();
-    }
+//    public List<UserPermissionEntity> findByUsername(String username) {
+//        UserEntity user = userRepository.findByUsername(username);
+//        return user != null ? userPermissionRepository.findByUserId(user.getId()) : List.of();
+//    }
 
     // In UserPermissionService.java
     public List<UserPermissionEntity> saveUserPermissions(List<UserPermissionEntity> userPermissions) {

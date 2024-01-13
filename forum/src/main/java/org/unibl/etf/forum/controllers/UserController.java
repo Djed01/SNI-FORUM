@@ -1,5 +1,6 @@
 package org.unibl.etf.forum.controllers;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.unibl.etf.forum.models.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
-        UserEntity user = userService.findUserByUsername(username);
+    public ResponseEntity<UserDetails> getUserByUsername(@PathVariable String username) {
+        UserDetails user = userService.loadUserByUsername(username);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }

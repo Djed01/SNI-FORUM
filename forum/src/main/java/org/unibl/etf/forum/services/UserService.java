@@ -1,5 +1,9 @@
 package org.unibl.etf.forum.services;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.unibl.etf.forum.exceptions.InvalidUsernameException;
 import org.unibl.etf.forum.models.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+
 
     private final UserRepository userRepository;
 
@@ -34,8 +39,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public UserEntity findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() -> new InvalidUsernameException("Ne postoji korisnik."));
+    }
+
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException{
+        return userRepository.findByEmail(email).orElseThrow(() -> new InvalidUsernameException("Ne postoji korisnik."));
     }
 
     public List<UserEntity> findAllInactiveUsers() {
