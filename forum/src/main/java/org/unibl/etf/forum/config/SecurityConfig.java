@@ -39,10 +39,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 //.csrf(csrf -> csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/**")
+                        .requestMatchers(HttpMethod.POST, "/auth/**")
                         .permitAll()
-                        .requestMatchers("/students/**").hasRole("ADMIN")
+                        .requestMatchers("/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

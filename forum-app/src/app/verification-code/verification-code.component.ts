@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-verification-code',
   templateUrl: './verification-code.component.html',
@@ -7,9 +8,20 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class VerificationCodeComponent {
   code: string = '';
-  @Output() verifyCode = new EventEmitter<string>();
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    this.verifyCode.emit(this.code);  // Emit the code for the parent component to handle
+    this.authService.verifyCode(this.code).subscribe(
+      (response) => {
+        localStorage.setItem('token', response.token);
+        this.authService.clearTempUsername(); // Clear the temporary username
+        this.router.navigate(['/topics']);
+      },
+      (error) => {
+        console.error('Verification failed', error);
+      }
+    );
   }
 }
+

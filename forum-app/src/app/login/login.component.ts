@@ -14,8 +14,14 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.username, this.password).subscribe(() => {
-      this.router.navigate(['/topics']);
-    });
+    this.authService.login(this.username, this.password).subscribe(
+      () => {
+        this.router.navigate(['/verification']);
+      },
+      (error) => {
+        console.error('Login failed', error);
+      }
+    );
   }
 }
+

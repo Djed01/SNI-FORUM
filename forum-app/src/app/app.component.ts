@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserService } from './services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,13 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  currentTopicName: string = 'Forum';
+  constructor(private router: Router, public userService: UserService) {}
+  shouldShowMenu(): boolean {
+    const currentUrl = this.router.url;
+    const hideOnRoutes = ['/', '/register', '/signup'];
+    const isOnHideRoute = hideOnRoutes.includes(currentUrl);
+
+    return (this.userService.isAdmin() || this.userService.isModerator()) && !isOnHideRoute;
+  }
   title = 'forum-app';
 }

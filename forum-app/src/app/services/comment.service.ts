@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { Comment } from '../models/comment.model'; 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Comment } from '../models/comment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,28 +11,39 @@ export class CommentService {
 
   constructor(private http: HttpClient) {}
 
+  // Private method to create HTTP headers with the JWT token
+  private createHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
+
   getCommentsByTopic(topicId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${this.baseUrl}/topic/${topicId}`);
+    const headers = this.createHeaders();
+    return this.http.get<Comment[]>(`${this.baseUrl}/topic/${topicId}`, { headers });
   }
 
   getCommentRequestsByTopic(topicId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${this.baseUrl}/topic/${topicId}/falseStatus`);
+    const headers = this.createHeaders();
+    return this.http.get<Comment[]>(`${this.baseUrl}/topic/${topicId}/falseStatus`, { headers });
   }
 
-
   postComment(comment: Comment): Observable<any> {
-    return this.http.post(this.baseUrl, comment);
+    const headers = this.createHeaders();
+    return this.http.post(this.baseUrl, comment, { headers });
   }
 
   updateCommentStatus(commentId: number): Observable<Comment> {
-    return this.http.put<Comment>(`${this.baseUrl}/${commentId}/status/true`, null);
+    const headers = this.createHeaders();
+    return this.http.put<Comment>(`${this.baseUrl}/${commentId}/status/true`, null, { headers });
   }
 
   deleteComment(commentId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${commentId}`);
+    const headers = this.createHeaders();
+    return this.http.delete(`${this.baseUrl}/${commentId}`, { headers });
   }
   
   updateComment(commentId: number, updatedComment: Comment): Observable<Comment> {
-    return this.http.put<Comment>(`${this.baseUrl}/${commentId}`, updatedComment);
+    const headers = this.createHeaders();
+    return this.http.put<Comment>(`${this.baseUrl}/${commentId}`, updatedComment, { headers });
   }
 }

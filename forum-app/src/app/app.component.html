@@ -1,33 +1,27 @@
 <mat-toolbar color="primary">
     <!-- Other toolbar content -->
-    {{ currentTopicName }}
+    <label [routerLink]="['/topics']">FORUM</label>
     <!-- Right-aligned menu -->
     <span class="example-spacer"></span>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>menu</mat-icon> <!-- Changed icon here -->
-  </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="shouldShowMenu() && (userService.isAdmin() || userService.isModerator())">
+        <mat-icon>menu</mat-icon> <!-- Changed icon here -->
+    </button>
     <mat-menu #menu="matMenu">
-        <!-- <button mat-menu-item *ngIf="userService.isAdmin()"> -->
-        <button mat-menu-item [routerLink]="['/notactivated']"> 
+        <button mat-menu-item *ngIf="userService.isAdmin()" [routerLink]="['/notactivated']"> 
             <span>Registration Requests</span>
         </button>
-        <!-- <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()"> -->
-        <button mat-menu-item [routerLink]="['/comments/requests/1']">
+        <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()" [routerLink]="['/comments/requests/1']">
             <span>Science Comment Requests</span>
         </button>
-        <!-- <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()"> -->
-        <button mat-menu-item [routerLink]="['/comments/requests/2']">
+        <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()" [routerLink]="['/comments/requests/2']">
             <span>Culture Comment Requests</span>
         </button>
-        <!-- <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()"> -->
-        <button mat-menu-item [routerLink]="['//comments/requests/3']">
+        <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()" [routerLink]="['/comments/requests/3']">
             <span>Sport Comment Requests</span>
         </button>
-        <!-- <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()"> -->
-        <button mat-menu-item [routerLink]="['/comments/requests/4']">
+        <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()" [routerLink]="['/comments/requests/4']">
             <span>Music Comment Requests</span>
         </button>
-
         <!-- Add more menu items here -->
     </mat-menu>
 </mat-toolbar>
