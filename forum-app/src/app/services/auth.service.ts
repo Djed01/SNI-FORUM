@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/auth'; // Adjust the URL as needed
-
+  private baseUrl = 'http://localhost:8080/auth'; 
   constructor(private http: HttpClient) {}
 
   signup(username: string, email: string, password: string): Observable<any> {
@@ -13,7 +12,6 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    // Replace with your API endpoint
     return this.http.post<any>('/api/auth/login', { username, password });
   }
 }

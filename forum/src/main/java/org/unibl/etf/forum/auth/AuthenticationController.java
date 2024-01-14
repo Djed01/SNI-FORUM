@@ -12,8 +12,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<TempAuthResponse> login(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authenticationService.login(request));
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/verify-2fa")
+    public ResponseEntity<JwtAuthResponse> verifyTwoFactorCode(@RequestBody TwoFactorVerificationRequest request) {
+        return ResponseEntity.ok(authenticationService.verifyTwoFactorCode(
+                request.getUsername(), request.getUserSubmittedCode()));
     }
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/signup")
