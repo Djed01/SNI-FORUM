@@ -1,5 +1,6 @@
 package org.unibl.etf.forum.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.unibl.etf.forum.models.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

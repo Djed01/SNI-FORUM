@@ -24,7 +24,7 @@ export class CommentService {
 
   getCommentRequestsByTopic(topicId: number): Observable<Comment[]> {
     const headers = this.createHeaders();
-    return this.http.get<Comment[]>(`${this.baseUrl}/topic/${topicId}/falseStatus`, { headers });
+    return this.http.get<Comment[]>(`${this.baseUrl}/falseStatus/${topicId}`, { headers });
   }
 
   postComment(comment: Comment): Observable<any> {

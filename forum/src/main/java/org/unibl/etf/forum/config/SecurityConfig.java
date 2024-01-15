@@ -37,10 +37,15 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                //.csrf(csrf -> csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/**")
-                        .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/topics/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/comments/topic/**").hasRole("USER")
+                        .requestMatchers("/api/comments/**").hasRole("MODERATOR")
+                        .requestMatchers("/api/comments/").hasRole("USER")
+                        .requestMatchers("/api/comments/{id}").hasRole("USER")
+                        .requestMatchers("/api/topics/**").hasRole("MODERATOR")
+                        .requestMatchers("/api/users/{id}").hasAnyRole("MODERATOR","USER")
                         .requestMatchers("/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -48,7 +53,6 @@ public class SecurityConfig {
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        // .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 

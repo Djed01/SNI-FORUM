@@ -16,12 +16,13 @@ export class LoginComponent {
   login() {
     this.authService.login(this.username, this.password).subscribe(
       () => {
-        this.router.navigate(['/verification']);
+        console.log('Login Success');
       },
       (error) => {
         console.error('Login failed', error);
       }
     );
+    this.router.navigate(['/verification']);
   }
 }
 

@@ -38,7 +38,7 @@ public class CommentController {
     public ResponseEntity<CommentEntity> createComment(@RequestBody CommentEntity comment) {
         return ResponseEntity.ok(commentService.saveComment(comment));
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/{id}")
     public ResponseEntity<CommentEntity> updateComment(@PathVariable Integer id, @RequestBody CommentEntity comment) {
         if (!commentService.findCommentById(id).isPresent()) {
@@ -63,7 +63,7 @@ public class CommentController {
         return ResponseEntity.ok(comments);
     }
 
-    @GetMapping("/topic/{topicId}/falseStatus")
+    @GetMapping("/falseStatus/{topicId}")
     public ResponseEntity<List<CommentEntity>> getCommentsByTopicWithFalseStatus(@PathVariable Integer topicId) {
         List<CommentEntity> comments = commentService.findCommentsByTopicWithStatusFalse(topicId);
         return ResponseEntity.ok(comments);

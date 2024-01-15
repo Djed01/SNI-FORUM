@@ -1,5 +1,6 @@
 package org.unibl.etf.forum.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,7 +36,7 @@ public class CommentEntity {
     @Column(name = "Status")
     private Boolean status;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
     private UserEntity user;
