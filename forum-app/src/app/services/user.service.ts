@@ -29,6 +29,11 @@ export class UserService {
     return this.http.get<User>(`${this.baseUrl}/${id}`, { headers });
   }
 
+  getUserByUsername(username: string): Observable<User> {
+    const headers = this.createHeaders();
+    return this.http.get<User>(`${this.baseUrl}/username/${username}`, { headers });
+  }
+
   getInactiveUsers(): Observable<User[]> {
     const headers = this.createHeaders();
     return this.http.get<User[]>(`${this.baseUrl}/status/false`, { headers });

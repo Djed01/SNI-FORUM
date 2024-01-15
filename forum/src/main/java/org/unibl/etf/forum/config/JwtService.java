@@ -44,11 +44,12 @@ public class JwtService {
         if(userDetails instanceof UserEntity){
             UserEntity user = (UserEntity) userDetails;
             extraClaims.put("role", user.getRole().toString());
+            extraClaims.put("id", user.getId());
         }
         return Jwts.builder().setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 

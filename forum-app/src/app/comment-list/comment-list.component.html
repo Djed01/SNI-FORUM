@@ -5,9 +5,29 @@
     <mat-card-title>{{ usernames[comment.userId] }}</mat-card-title> 
     <mat-card-subtitle>{{ comment.time | date:'short' }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content *ngIf="editingComment !== comment">
     <p>{{ comment.content }}</p>
   </mat-card-content>
+  <div *ngIf="editingComment === comment" style="padding: 0px 20px 0px 20px;">
+    <mat-form-field appearance="fill" class="wide-textarea" style="width: 100%;">
+      <mat-label>Edit Comment</mat-label>
+      <textarea matInput [(ngModel)]="comment.content" rows="3"></textarea>
+      <mat-icon matSuffix>edit</mat-icon>
+    </mat-form-field>
+    <button mat-button (click)="submitEdit(comment)">Save</button>
+    <button mat-button (click)="cancelEdit()">Cancel</button>
+  </div>
+  
+
+  <mat-card-actions *ngIf="isCurrentUserAuthorOfComment(comment)">
+    <button mat-icon-button (click)="openConfirmDialog(comment.id)" aria-label="Decline comment">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button (click)="startEdit(comment)" aria-label="Edit comment" [disabled]="editingComment !== null">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-card-actions>
+  
 </mat-card>
 
 <div class="comment-form">
@@ -31,5 +51,12 @@
 </div>
 
 
-
+<ng-template #confirmDialog>
+  <h2 mat-dialog-title>Delete Comment</h2>
+  <mat-dialog-content>Are you sure you want to delete this comment?</mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">Yes</button>
+    <button mat-button [mat-dialog-close]="false">No</button>
+  </mat-dialog-actions>
+</ng-template>
 
