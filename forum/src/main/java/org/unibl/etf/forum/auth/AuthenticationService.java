@@ -71,7 +71,7 @@ public class AuthenticationService {
         user.setEmail(signUpRequest.getEmail());
         user.setUsername(signUpRequest.getUsername());
         user.setPasswordHash(passwordEncoder.encode(signUpRequest.getPassword()));
-        user.setRole("User");
+        user.setRole("ROLE_USER");
         user.setStatus(false);
         return userRepository.save(user);
     }

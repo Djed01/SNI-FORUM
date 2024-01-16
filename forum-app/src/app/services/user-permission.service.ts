@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserPermissionEntity } from '../models/user-permission.model'; // You need to create this model
 
@@ -11,7 +11,14 @@ export class UserPermissionService {
 
   constructor(private http: HttpClient) {}
 
+    // Private method to create HTTP headers with the JWT token
+    private createHeaders(): HttpHeaders {
+      const token = localStorage.getItem('token');
+      return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    }
+
   getPermissionsByUserIdAndTopicId(userId: number, topicId: number): Observable<UserPermissionEntity> {
-    return this.http.get<UserPermissionEntity>(`${this.apiUrl}/user/${userId}/topic/${topicId}`);
+    const headers = this.createHeaders();
+    return this.http.get<UserPermissionEntity>(`${this.apiUrl}/user/${userId}/topic/${topicId}`, { headers });
   }
 }

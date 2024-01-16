@@ -13,6 +13,12 @@ export class NotActivatedUsersComponent implements OnInit {
   permissions: { [userId: number]: { [topicId: string]: { add: boolean, edit: boolean, delete: boolean } } } = {};
   displayedColumns: string[] = ['userName','email','roleColumn', 'sciencePermissions','culturePermissions',
   'sportPermissions','musicPermissions', 'activate'];
+  roleMapping = {
+    'User': 'ROLE_USER',
+    'Moderator': 'ROLE_MODERATOR',
+    'Admin': 'ROLE_ADMIN'
+  };
+  
 
   constructor(private userService: UserService) {}
 
@@ -40,8 +46,26 @@ activateUser(user: User) {
   const userPermissions: UserPermission[] = this.constructUserPermissions(user.id);
   console.log(userPermissions);
   this.userService.saveUserPermissions(userPermissions).subscribe(() => {
+    let roleConstant;
+
+    switch (user.role) {
+      case "User":
+        roleConstant = "ROLE_USER";
+        break;
+      case "Moderator":
+        roleConstant = "ROLE_MODERATOR";
+        break;
+      case "Admin":
+        roleConstant = "ROLE_ADMIN";
+        break;
+      default:
+        console.error('Invalid role selected');
+        // Handle the error case where an invalid role is selected
+        return; // Exit the function early
+    }
+
     // Call the updateUserRole API
-    this.userService.updateUserRole(user.id, user.role).subscribe(() => {
+    this.userService.updateUserRole(user.id, roleConstant).subscribe(() => {
       // Update user status after saving role
       this.userService.updateUserStatus(user.id, true).subscribe(() => {
         this.loadInactiveUsers(); // Refresh the list after activation

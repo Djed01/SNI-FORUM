@@ -50,13 +50,11 @@ export class CommentListComponent implements OnInit {
   }
 
   fetchUserPermissions() {
-    console.log(this.currentUserId + "TOPIC:" + this.topicId)
     if (this.currentUserId && this.topicId) {
       this.userPermissionService.getPermissionsByUserIdAndTopicId(this.currentUserId, this.topicId).subscribe(
         (permissions: UserPermissionEntity) => {
           // Store the permissions
           this.userPermissions = permissions;
-          console.log(this.userPermissions);
         }
       );
     }
