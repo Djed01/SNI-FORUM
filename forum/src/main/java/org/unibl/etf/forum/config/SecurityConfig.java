@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/userPermissions/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/topics/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/comments/topic/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST,"/api/comments/**").hasRole("USER")

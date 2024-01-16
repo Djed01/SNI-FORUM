@@ -11,5 +11,6 @@ import java.util.List;
 public interface UserPermissionRepository extends JpaRepository<UserPermissionEntity, UserPermissionEntityPK> {
     List<UserPermissionEntity> findByUserId(Integer userId);
     List<UserPermissionEntity> findByTopicId(Integer topicId);
+    UserPermissionEntity findByUserIdAndTopicId(Integer userId, Integer topicId);
 
 }

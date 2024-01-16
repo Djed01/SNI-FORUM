@@ -29,16 +29,17 @@ public class UserPermissionController {
         return ResponseEntity.ok(userPermissionService.findByTopicId(topicId));
     }
 
-//    @GetMapping("/username/{username}")
-//    public ResponseEntity<List<UserPermissionEntity>> getPermissionsByUsername(@PathVariable String username) {
-//        return ResponseEntity.ok(userPermissionService.findByUsername(username));
-//    }
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/")
     public ResponseEntity<List<UserPermissionEntity>> addUserPermissions(@RequestBody List<UserPermissionEntity> userPermissions) {
         List<UserPermissionEntity> savedUserPermissions = userPermissionService.saveUserPermissions(userPermissions);
         return ResponseEntity.ok(savedUserPermissions);
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/user/{userId}/topic/{topicId}")
+    public ResponseEntity<UserPermissionEntity> getPermissionsByUserIdAndTopicId(@PathVariable Integer userId, @PathVariable Integer topicId) {
+        UserPermissionEntity userPermission = userPermissionService.findPermissionByUserIdAndTopicId(userId, topicId);
+        return ResponseEntity.ok(userPermission);
+    }
 
 }

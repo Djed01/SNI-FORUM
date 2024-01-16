@@ -31,15 +31,12 @@ public class UserPermissionService {
         return userPermissionRepository.findByTopicId(topicId);
     }
 
-//    public List<UserPermissionEntity> findByUsername(String username) {
-//        UserEntity user = userRepository.findByUsername(username);
-//        return user != null ? userPermissionRepository.findByUserId(user.getId()) : List.of();
-//    }
-
-    // In UserPermissionService.java
     public List<UserPermissionEntity> saveUserPermissions(List<UserPermissionEntity> userPermissions) {
-        // Directly use saveAll method provided by JpaRepository
         return userPermissionRepository.saveAll(userPermissions);
+    }
+
+    public UserPermissionEntity findPermissionByUserIdAndTopicId(Integer userId, Integer topicId) {
+        return userPermissionRepository.findByUserIdAndTopicId(userId, topicId);
     }
 
 }

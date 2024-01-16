@@ -7,6 +7,9 @@ import { User } from '../models/user.model';
 import { jwtDecode } from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 import { TemplateRef } from '@angular/core';
+import { UserPermissionService } from '../services/user-permission.service';
+import { UserPermissionEntity } from '../models/user-permission.model'; 
+
 
 @Component({
   selector: 'app-comment-list',
@@ -24,25 +27,39 @@ export class CommentListComponent implements OnInit {
   totalComments: number = 0;
   currentTopicName: string = 'Loading...';
   currentUserId: number = 0;
+  userPermissions: UserPermissionEntity | null = null;
 
   constructor(
     private commentService: CommentService,
     private userService: UserService,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private userPermissionService: UserPermissionService,
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       const topicId = +params['topicId']; // '+' converts the string 'topicId' to a number
       if (topicId) {
+        this.fetchCurrentUserId();
         this.topicId = topicId;
-       // this.loadHardcodedComments();
         this.loadComments(topicId);
         this.currentTopicName = this.getTopicName(topicId);
-        this.fetchCurrentUserId();
       }
     });
+  }
+
+  fetchUserPermissions() {
+    console.log(this.currentUserId + "TOPIC:" + this.topicId)
+    if (this.currentUserId && this.topicId) {
+      this.userPermissionService.getPermissionsByUserIdAndTopicId(this.currentUserId, this.topicId).subscribe(
+        (permissions: UserPermissionEntity) => {
+          // Store the permissions
+          this.userPermissions = permissions;
+          console.log(this.userPermissions);
+        }
+      );
+    }
   }
 
   fetchCurrentUserId() {
@@ -54,6 +71,9 @@ export class CommentListComponent implements OnInit {
       this.userService.getUserByUsername(username).subscribe(
         (user: User) => {
             this.currentUserId = user.id;
+
+            // GET the user permissions
+            this.fetchUserPermissions();
         });
     }
   }

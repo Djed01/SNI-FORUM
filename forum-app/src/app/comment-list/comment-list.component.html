@@ -20,10 +20,10 @@
   
 
   <mat-card-actions *ngIf="isCurrentUserAuthorOfComment(comment)">
-    <button mat-icon-button (click)="openConfirmDialog(comment.id)" aria-label="Decline comment">
+    <button mat-icon-button (click)="openConfirmDialog(comment.id)" *ngIf="userPermissions?.deletePermission" aria-label="Decline comment">
       <mat-icon>delete</mat-icon>
     </button>
-    <button mat-icon-button (click)="startEdit(comment)" aria-label="Edit comment" [disabled]="editingComment !== null">
+    <button mat-icon-button (click)="startEdit(comment)" *ngIf="userPermissions?.editPermission" aria-label="Edit comment" [disabled]="editingComment !== null">
       <mat-icon>edit</mat-icon>
     </button>
   </mat-card-actions>
@@ -33,9 +33,9 @@
 <div class="comment-form">
   <div class="wrapper-comment">
   <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Write your comment here..." [(ngModel)]="newCommentContent"></textarea>
+    <textarea matInput placeholder="Write your comment here..." [(ngModel)]="newCommentContent" [disabled]="!userPermissions?.addPermission"></textarea>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="postComment()">Publish</button>
+  <button mat-raised-button color="primary" (click)="postComment()" [disabled]="!userPermissions?.addPermission">Publish</button>
 </div>
 
   <div class="pagination-controls">
