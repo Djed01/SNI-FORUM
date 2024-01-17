@@ -13,7 +13,7 @@ export class AppComponent {
     const currentUrl = this.router.url;
     const hideOnRoutes = ['/', '/register', '/signup'];
     const isOnHideRoute = hideOnRoutes.includes(currentUrl);
-
+    
     return (this.userService.isAdmin() || this.userService.isModerator()) && !isOnHideRoute;
   }
   title = 'forum-app';

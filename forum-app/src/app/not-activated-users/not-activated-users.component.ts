@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UserPermission } from '../models/permission.model';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
@@ -20,7 +20,7 @@ export class NotActivatedUsersComponent implements OnInit {
   };
   
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,private changeDetectorRef: ChangeDetectorRef ) {}
 
   ngOnInit() {
     this.loadInactiveUsers();
@@ -43,8 +43,18 @@ export class NotActivatedUsersComponent implements OnInit {
 
 
 activateUser(user: User) {
+  // Remove the user from the inactiveUsers array
+  const index = this.inactiveUsers.findIndex(u => u.id === user.id);
+  if (index !== -1) {
+    // Create a new array without the activated user
+    this.inactiveUsers = [
+      ...this.inactiveUsers.slice(0, index),
+      ...this.inactiveUsers.slice(index + 1)
+    ];
+    this.changeDetectorRef.detectChanges();
+  }
+
   const userPermissions: UserPermission[] = this.constructUserPermissions(user.id);
-  console.log(userPermissions);
   this.userService.saveUserPermissions(userPermissions).subscribe(() => {
     let roleConstant;
 

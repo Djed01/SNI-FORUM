@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-verification-code',
   templateUrl: './verification-code.component.html',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class VerificationCodeComponent {
   code: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private snackBar: MatSnackBar) {}
 
   onSubmit() {
     this.authService.verifyCode(this.code).subscribe(
@@ -19,7 +20,9 @@ export class VerificationCodeComponent {
         this.router.navigate(['/topics']);
       },
       (error) => {
-        console.error('Verification failed', error);
+        this.snackBar.open("Invalid Verification Code!", 'Close', {
+          duration: 3000,
+        });
       }
     );
   }

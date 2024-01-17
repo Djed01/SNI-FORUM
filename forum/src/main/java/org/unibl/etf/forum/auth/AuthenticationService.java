@@ -1,6 +1,7 @@
 package org.unibl.etf.forum.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.forum.config.JwtService;
+import org.unibl.etf.forum.exceptions.AccountNotActivatedException;
 import org.unibl.etf.forum.exceptions.InvalidTwoFactorCodeException;
 import org.unibl.etf.forum.exceptions.InvalidUsernameException;
 import org.unibl.etf.forum.models.entities.UserEntity;
@@ -27,17 +29,21 @@ public class AuthenticationService {
     private final JavaMailSender mailSender;
     private final Map<String, String> twoFactorCodeMap = new ConcurrentHashMap<>();
 
-    public TempAuthResponse login(AuthRequest request) {
+    public TempAuthResponse login(AuthRequest request) throws AccountNotActivatedException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         var user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new InvalidUsernameException("Invalid username or password."));
 
-        String twoFactorCode = generateTwoFactorCode();
-        twoFactorCodeMap.put(user.getUsername(), twoFactorCode);
-        sendTwoFactorCodeEmail(user.getEmail(), twoFactorCode);
+        if(user.getStatus()) {
+            String twoFactorCode = generateTwoFactorCode();
+            twoFactorCodeMap.put(user.getUsername(), twoFactorCode);
+            sendTwoFactorCodeEmail(user.getEmail(), twoFactorCode);
 
-        return new TempAuthResponse(user.getUsername());
+            return new TempAuthResponse(user.getUsername());
+        }else{
+            throw  new AccountNotActivatedException("Account not activated!");
+        }
     }
 
     public JwtAuthResponse verifyTwoFactorCode(String username, String userSubmittedCode) {
@@ -58,6 +64,14 @@ public class AuthenticationService {
         message.setTo(email);
         message.setSubject("Your Two-Factor Authentication Code");
         message.setText("Your 2FA code is: " + twoFactorCode);
+        mailSender.send(message);
+    }
+
+    public void sendActivationEmail(String email){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Your Account Is Activated");
+        message.setText("Your account is activated!");
         mailSender.send(message);
     }
 

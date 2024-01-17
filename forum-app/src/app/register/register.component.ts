@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterComponent {
   password: string = "";
   verifyPassword: string = "";
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private snackBar: MatSnackBar) {}
 
   register() {
     if (this.password === this.verifyPassword) {
@@ -24,13 +25,15 @@ export class RegisterComponent {
             this.router.navigate(['']); // Navigate to the desired route after registration
           },
           error => {
-            console.error('Registration failed', error);
-            // Handle registration error
+            this.snackBar.open("Registration Error!", 'Close', {
+              duration: 3000,
+            });
           }
         );
     } else {
-      console.error('Passwords do not match!');
-      // Handle the error case where the passwords do not match
+      this.snackBar.open("Passwords don't match!", 'Close', {
+        duration: 3000,
+      });
     }
   }
 }

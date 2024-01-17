@@ -2,6 +2,7 @@ package org.unibl.etf.forum.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.unibl.etf.forum.auth.AuthenticationService;
 import org.unibl.etf.forum.models.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,12 @@ public class UserController {
 
     private final UserService userService;
 
+    private final AuthenticationService authenticationService;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping
@@ -79,6 +83,7 @@ public class UserController {
                 .map(user -> {
                     user.setStatus(true);
                     userService.saveUser(user);
+                    authenticationService.sendActivationEmail(user.getEmail());
                     return ResponseEntity.ok(user);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
