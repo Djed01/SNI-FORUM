@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.forum.exceptions.AccountNotActivatedException;
 import org.unibl.etf.forum.exceptions.InvalidUsernameException;
 import org.unibl.etf.forum.models.entities.UserEntity;
+
+import javax.validation.Valid;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
@@ -15,7 +18,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
         try {
             TempAuthResponse response = authenticationService.login(request);
             return ResponseEntity.ok(response);

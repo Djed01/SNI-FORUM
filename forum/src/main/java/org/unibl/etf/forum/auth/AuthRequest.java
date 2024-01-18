@@ -1,5 +1,6 @@
 package org.unibl.etf.forum.auth;
 
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthRequest {
-    private String username;
-    private String password;
+    private @SQLInjectionSafe String username;
+    private @SQLInjectionSafe String password;
 }
