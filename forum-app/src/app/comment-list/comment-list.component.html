@@ -1,5 +1,6 @@
 <h1 style="display: flex; align-items: center; justify-content: center;"> {{currentTopicName}}</h1>
-<mat-card class="comment-card"  *ngFor="let comment of comments">
+<div class="comments-container">
+<mat-card class="comment-card"  *ngFor="let comment of displayedComments">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{ usernames[comment.userId] }}</mat-card-title> 
@@ -14,8 +15,10 @@
       <textarea matInput [(ngModel)]="comment.content" rows="3"></textarea>
       <mat-icon matSuffix>edit</mat-icon>
     </mat-form-field>
+    <div class="comment-edit-buttons">
     <button mat-button (click)="submitEdit(comment)">Save</button>
     <button mat-button (click)="cancelEdit()">Cancel</button>
+  </div>
   </div>
   
 
@@ -29,6 +32,7 @@
   </mat-card-actions>
   
 </mat-card>
+</div>
 
 <div class="comment-form">
   <div class="wrapper-comment">

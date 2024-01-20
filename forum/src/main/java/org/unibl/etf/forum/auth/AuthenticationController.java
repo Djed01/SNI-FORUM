@@ -3,12 +3,11 @@ package org.unibl.etf.forum.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.forum.exceptions.AccountNotActivatedException;
 import org.unibl.etf.forum.exceptions.InvalidUsernameException;
 import org.unibl.etf.forum.models.entities.UserEntity;
-
-import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -18,7 +17,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
             TempAuthResponse response = authenticationService.login(request);
             return ResponseEntity.ok(response);
@@ -42,5 +41,13 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public  ResponseEntity<UserEntity> signup(@RequestBody SignUpRequest signUpRequest){
         return ResponseEntity.ok(authenticationService.signup(signUpRequest));
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody TokenDTO tokenDto) {
+        // Blacklist the token
+        String token = tokenDto.getToken();
+        authenticationService.logout(token);
+        return ResponseEntity.status(HttpStatus.OK).body("Logged out successfully");
     }
 }

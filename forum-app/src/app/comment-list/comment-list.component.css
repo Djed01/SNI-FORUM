@@ -34,6 +34,7 @@ p{
   bottom: 0;
   width: 100%;
   padding: 20px;
+  z-index: 10;
   background: white; /* or any color that fits your design */
   box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* optional: adds a nice shadow effect */
 }
@@ -59,4 +60,15 @@ p{
   align-items: center;
 }
 
+.comments-container {
+  padding-bottom: 198px;
+}
 
+.comment-card {
+  padding-left: 20px;
+}
+
+.comment-edit-buttons {
+  background-color: white; /* or your desired color */
+  z-index: 5; /* Adjust as necessary */
+}

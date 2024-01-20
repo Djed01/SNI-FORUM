@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
     <!-- Other toolbar content -->
-    <label [routerLink]="['/topics']">FORUM</label>
+    <label [routerLink]="getForumLink()">FORUM</label>
     <!-- Right-aligned menu -->
     <span class="example-spacer"></span>
-    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="shouldShowMenu() && (userService.isAdmin() || userService.isModerator())">
+    <button mat-icon-button *ngIf="shouldShowMenu()" [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon> <!-- Changed icon here -->
     </button>
     <mat-menu #menu="matMenu">
@@ -21,6 +21,9 @@
         </button>
         <button mat-menu-item *ngIf="userService.isAdmin() || userService.isModerator()" [routerLink]="['/comments/requests/4']">
             <span>Music Comment Requests</span>
+        </button>
+        <button mat-menu-item (click)="logout()" [routerLink]="['/']">
+            <span>Log Out</span>
         </button>
         <!-- Add more menu items here -->
     </mat-menu>

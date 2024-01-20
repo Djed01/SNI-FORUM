@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.forum.config.JwtService;
+import org.unibl.etf.forum.config.TokenBlacklist;
 import org.unibl.etf.forum.exceptions.AccountNotActivatedException;
 import org.unibl.etf.forum.exceptions.InvalidTwoFactorCodeException;
 import org.unibl.etf.forum.exceptions.InvalidUsernameException;
@@ -27,6 +28,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
+    private final TokenBlacklist tokenBlacklist;
     private final Map<String, String> twoFactorCodeMap = new ConcurrentHashMap<>();
 
     public TempAuthResponse login(AuthRequest request) throws AccountNotActivatedException {
@@ -89,4 +91,10 @@ public class AuthenticationService {
         user.setStatus(false);
         return userRepository.save(user);
     }
+
+    public void logout(String token) {
+        // Blacklist the provided JWT token
+        tokenBlacklist.blacklistToken(token);
+    }
+
 }

@@ -132,12 +132,18 @@ export class CommentListComponent implements OnInit {
     });
   }
 
+  get displayedComments(): Comment[] {
+    const startIndex = (this.currentPage - 1) * this.limit;
+    return this.comments.slice(startIndex, startIndex + this.limit);
+  }
+
 
   loadComments(topicId: number) {
     this.commentService.getCommentsByTopic(topicId).subscribe(
       (comments: Comment[]) => {
         this.comments = comments; // Assign the fetched comments
         this.totalComments = comments.length;
+        this.currentPage = Math.ceil(this.totalComments / this.limit);
         this.loadUsernames();
       },
       error => {
@@ -200,7 +206,6 @@ export class CommentListComponent implements OnInit {
 
   changePage(newPage: number) {
     this.currentPage = newPage;
-    this.loadComments(this.topicId); // Reload comments for the new page
   }
 
   getTopicName(topicId: number): string {
