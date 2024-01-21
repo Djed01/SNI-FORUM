@@ -39,7 +39,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers( "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasAnyRole("USER","MODERATOR","ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/users/username/**").hasAnyRole("USER","MODERATOR","ADMIN")
                         .requestMatchers("/api/comments/falseStatus/{topicId}").hasAnyRole("ADMIN","MODERATOR")

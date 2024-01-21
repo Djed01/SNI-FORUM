@@ -34,6 +34,17 @@ export class UserService {
     return this.http.get<User>(`${this.baseUrl}/username/${username}`, { headers });
   }
 
+  //------------- GitHub Auth ------------
+  public getUserID(pid:any){
+    return this.http.get(this.baseUrl + "callback?code="+ pid)
+  }
+
+  public addUser(user: User){
+    return this.http.post<User>(this.baseUrl, user)
+  }
+
+  // -------------------------------------
+
   getInactiveUsers(): Observable<User[]> {
     const headers = this.createHeaders();
     return this.http.get<User[]>(`${this.baseUrl}/status/false`, { headers });

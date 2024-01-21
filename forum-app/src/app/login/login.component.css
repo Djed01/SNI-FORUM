@@ -24,4 +24,7 @@
     padding: 15px 20px; /* Bigger button for better clickability and visual impact */
     font-size: 1.1em; /* Larger text on the button */
   }
-  
+  .github-icon {
+    font-family: 'Material Icons'; /* Ensure correct font-family */
+    margin-right: 8px; /* Adjust the margin as needed */
+  }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl = 'http://localhost:8080/auth';
-  private tempUsername: string | null = null; 
+  public tempUsername: string | null = null; 
   constructor(private http: HttpClient) {}
 
   private createHeaders(): HttpHeaders {
@@ -21,6 +22,20 @@ export class AuthService {
     this.tempUsername = username; // Store username temporarily
     return this.http.post<any>(`${this.baseUrl}/login`, { username, password });
   }
+
+  exchangeGitHubCodeForToken(code: string): Observable<any> {
+  
+    const url = `${this.baseUrl}/github-token-endpoint`;
+
+    const options = {
+      params: {
+        code: code,
+      },
+    };
+
+    return this.http.get(url, options);
+  }
+
 
   logout() {
     const token = localStorage.getItem('token');

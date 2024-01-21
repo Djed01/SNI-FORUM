@@ -12,7 +12,11 @@ export class LoginComponent {
   username: string = "";
   password: string = "";
 
-  constructor(private authService: AuthService, private router: Router,private snackBar: MatSnackBar) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+  ) {}
 
   login() {
     this.authService.login(this.username, this.password).subscribe(
@@ -24,10 +28,19 @@ export class LoginComponent {
         this.snackBar.open("Invalid Username or Password or Your Acount is Not Activated!", 'Close', {
           duration: 3000,
         });
-        this.router.navigate(['/']);
       }
     );
     this.router.navigate(['/verification']);
   }
+
+  signInWithGitHub() {
+    const clientId = 'f22d73ba4a4e441df84f';
+    const redirectUri = 'http://localhost:4200/verification';
+  
+    // Redirect to GitHub for authorization
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+  }
+  
+
 }
 

@@ -27,7 +27,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CommentRequestsComponent } from './comment-requests/comment-requests.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { AuthConfig } from 'angular-oauth2-oidc';
 
 
 @NgModule({
@@ -67,3 +67,4 @@ import { MatMenuModule } from '@angular/material/menu';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

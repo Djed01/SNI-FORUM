@@ -1,3 +1,4 @@
+
 <div class="main-container">
 <mat-card class="login-card">
     <mat-card-title>Login</mat-card-title>
@@ -12,6 +13,9 @@
           <input matInput type="password" [(ngModel)]="password" name="password" required>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Login</button>
+        <button mat-raised-button color="secondary" style="margin-left: 30px;" (click)="signInWithGitHub()">
+          <i class="fa fa-github"></i> GitHub
+        </button>
       </form>
     </mat-card-content>
     <mat-card-actions>
