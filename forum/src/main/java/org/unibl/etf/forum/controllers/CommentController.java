@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
@@ -38,7 +38,7 @@ public class CommentController {
     public ResponseEntity<CommentEntity> createComment(@RequestBody CommentEntity comment) {
         return ResponseEntity.ok(commentService.saveComment(comment));
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PutMapping("/{id}")
     public ResponseEntity<CommentEntity> updateComment(@PathVariable Integer id, @RequestBody CommentEntity comment) {
         if (!commentService.findCommentById(id).isPresent()) {
@@ -69,7 +69,7 @@ public class CommentController {
         return ResponseEntity.ok(comments);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PutMapping("/{id}/status/true")
     public ResponseEntity<CommentEntity> changeStatusToTrue(@PathVariable Integer id) {
         Optional<CommentEntity> commentOptional = commentService.findCommentById(id);

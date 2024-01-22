@@ -12,14 +12,14 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
@@ -36,20 +36,20 @@ public class AuthenticationController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PostMapping("/verify-2fa")
     public ResponseEntity<JwtAuthResponse> verifyTwoFactorCode(@RequestBody TwoFactorVerificationRequest request) {
         return ResponseEntity.ok(authenticationService.verifyTwoFactorCode(
                 request.getUsername(), request.getUserSubmittedCode()));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PostMapping("/signup")
     public ResponseEntity<UserEntity> signup(@RequestBody SignUpRequest signUpRequest) {
         return ResponseEntity.ok(authenticationService.signup(signUpRequest));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestBody TokenDTO tokenDto) {
         // Blacklist the token
@@ -58,7 +58,7 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).body("Logged out successfully");
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @GetMapping("/github-token-endpoint")
     public ResponseEntity<?> githubLogin(@RequestParam String code) {
         try {

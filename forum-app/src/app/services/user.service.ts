@@ -10,8 +10,8 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root',
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8080/api/users';
-  private userPermissionsUrl = 'http://localhost:8080/api/userPermissions';
+  private baseUrl = 'https://localhost:8080/api/users';
+  private userPermissionsUrl = 'https://localhost:8080/api/userPermissions';
   private currentUser: User;
 
   constructor(private http: HttpClient) {

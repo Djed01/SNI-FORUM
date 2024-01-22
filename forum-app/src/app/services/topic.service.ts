@@ -13,12 +13,12 @@ export class TopicService {
 
   getAllTopics() {
     const headers = this.createHeaders();
-    return this.http.get<Topic[]>('http://localhost:8080/api/topics', { headers });
+    return this.http.get<Topic[]>('https://localhost:8080/api/topics', { headers });
   }
 
   getCommentsByTopic(topicId: number) {
     const headers = this.createHeaders();
-    return this.http.get<Comment[]>(`http://localhost:8080/api/topics/${topicId}`, { headers });
+    return this.http.get<Comment[]>(`https://localhost:8080/api/topics/${topicId}`, { headers });
   }
 
 }

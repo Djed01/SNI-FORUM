@@ -8,7 +8,7 @@ import org.unibl.etf.forum.services.TopicService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/api/topics")
 public class TopicController {

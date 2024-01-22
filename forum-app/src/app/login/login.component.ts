@@ -35,7 +35,7 @@ export class LoginComponent {
 
   signInWithGitHub() {
     const clientId = 'f22d73ba4a4e441df84f';
-    const redirectUri = 'http://localhost:4200/verification';
+    const redirectUri = 'https://localhost:4200/verification';
   
     // Redirect to GitHub for authorization
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;

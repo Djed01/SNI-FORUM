@@ -1,0 +1,6 @@
+server:
+  ssl:
+    key-alias: alias
+    key-store: classpath:keystore.jks
+    key-store-type: JKS
+    key-password: sigurnost

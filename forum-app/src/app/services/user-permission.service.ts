@@ -7,7 +7,7 @@ import { UserPermissionEntity } from '../models/user-permission.model'; // You n
   providedIn: 'root'
 })
 export class UserPermissionService {
-  private apiUrl = 'http://localhost:8080/api/userPermissions';
+  private apiUrl = 'https://localhost:8080/api/userPermissions';
 
   constructor(private http: HttpClient) {}
 

@@ -5,7 +5,7 @@ import { User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/auth';
+  private baseUrl = 'https://localhost:8080/auth';
   public tempUsername: string | null = null; 
   constructor(private http: HttpClient) {}
 

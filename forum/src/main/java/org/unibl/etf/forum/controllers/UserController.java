@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.forum.services.UserService;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     // In UserController.java
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PatchMapping("/{id}/activate")
     public ResponseEntity<UserEntity> activateUser(@PathVariable Integer id) {
         return userService.findUserById(id)
@@ -88,7 +88,7 @@ public class UserController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PutMapping("/setRole/{userId}/{role}")
     public ResponseEntity<UserEntity> setUserRole(@PathVariable Integer userId, @PathVariable String role) {
         UserEntity user = userService.findUserById(userId)

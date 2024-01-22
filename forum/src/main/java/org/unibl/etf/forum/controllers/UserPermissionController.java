@@ -7,7 +7,7 @@ import org.unibl.etf.forum.models.entities.UserPermissionEntity;
 import org.unibl.etf.forum.services.UserPermissionService;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/api/userPermissions")
 public class UserPermissionController {
@@ -29,13 +29,13 @@ public class UserPermissionController {
         return ResponseEntity.ok(userPermissionService.findByTopicId(topicId));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @PostMapping("/")
     public ResponseEntity<List<UserPermissionEntity>> addUserPermissions(@RequestBody List<UserPermissionEntity> userPermissions) {
         List<UserPermissionEntity> savedUserPermissions = userPermissionService.saveUserPermissions(userPermissions);
         return ResponseEntity.ok(savedUserPermissions);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://localhost:4200")
     @GetMapping("/user/{userId}/topic/{topicId}")
     public ResponseEntity<UserPermissionEntity> getPermissionsByUserIdAndTopicId(@PathVariable Integer userId, @PathVariable Integer topicId) {
         UserPermissionEntity userPermission = userPermissionService.findPermissionByUserIdAndTopicId(userId, topicId);

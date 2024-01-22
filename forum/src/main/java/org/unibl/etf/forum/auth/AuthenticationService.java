@@ -115,7 +115,7 @@ public class AuthenticationService {
     public TempAuthResponse githubLogin(String code) throws AccountNotActivatedException {
         String clientId = "f22d73ba4a4e441df84f";
         String clientSecret = "76828b87376523bc3f711a9b6f929efe9b291eef";
-        String redirectUri = "http://localhost:4200/verification";
+        String redirectUri = "https://localhost:4200/verification";
 
         try {
             // Construct the request URL

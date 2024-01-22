@@ -38,7 +38,7 @@ public class WafFilter extends OncePerRequestFilter {
             if (jwt != null) {
                 tokenBlacklist.blacklistToken(jwt);
                 String subject = extractSubjectFromJwt(jwt);
-                LOGGER.warn("JWT blacklisted due to malicious request. Subject: {}, JWT: {}", subject, jwt);
+                    LOGGER.warn("JWT blacklisted due to malicious request. Subject: {}, JWT: {}", subject, jwt);
             }
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Malicious input detected");
             return;
