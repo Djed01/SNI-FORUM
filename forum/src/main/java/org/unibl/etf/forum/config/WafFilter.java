@@ -39,6 +39,8 @@ public class WafFilter extends OncePerRequestFilter {
                 tokenBlacklist.blacklistToken(jwt);
                 String subject = extractSubjectFromJwt(jwt);
                     LOGGER.warn("JWT blacklisted due to malicious request. Subject: {}, JWT: {}", subject, jwt);
+            }else{
+                LOGGER.warn("Someone tried to send a malicious request.");
             }
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Malicious input detected");
             return;
@@ -136,7 +138,7 @@ public class WafFilter extends OncePerRequestFilter {
         }
     }
 
-    private boolean isMaliciousValue(String value) {
+    public boolean isMaliciousValue(String value) {
         return SQL_INJECTION_PATTERN.matcher(value).find() || XSS_PATTERN.matcher(value).find() || value.length()>BUFFER_OVERFLOW_LIMIT;
     }
 

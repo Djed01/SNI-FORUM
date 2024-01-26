@@ -45,6 +45,7 @@ public class CommentController {
             return ResponseEntity.notFound().build();
         }
         comment.setId(id);
+        comment.setStatus(false);
         return ResponseEntity.ok(commentService.saveComment(comment));
     }
 

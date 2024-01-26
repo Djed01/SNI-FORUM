@@ -37,7 +37,9 @@ export class VerificationCodeComponent {
       (response) => {
         localStorage.setItem('token', response.token);
         this.authService.clearTempUsername(); // Clear the temporary username
-        this.router.navigate(['/topics']);
+        this.router.navigate(['/topics']).then(() => {
+          window.location.reload(); // Reload the page after navigation
+        });
       },
       (error) => {
         this.snackBar.open("Invalid Verification Code!", 'Close', {

@@ -1,9 +1,12 @@
 package org.unibl.etf.forum.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.unibl.etf.forum.config.WafFilter;
 import org.unibl.etf.forum.exceptions.AccountNotActivatedException;
 import org.unibl.etf.forum.exceptions.InvalidUsernameException;
 import org.unibl.etf.forum.models.entities.UserEntity;
@@ -23,8 +26,8 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
-            TempAuthResponse response = authenticationService.login(request);
-            return ResponseEntity.ok(response);
+                TempAuthResponse response = authenticationService.login(request);
+                return ResponseEntity.ok(response);
         } catch (AccountNotActivatedException e) {
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
@@ -38,15 +41,15 @@ public class AuthenticationController {
 
     @CrossOrigin(origins = "https://localhost:4200")
     @PostMapping("/verify-2fa")
-    public ResponseEntity<JwtAuthResponse> verifyTwoFactorCode(@RequestBody TwoFactorVerificationRequest request) {
-        return ResponseEntity.ok(authenticationService.verifyTwoFactorCode(
-                request.getUsername(), request.getUserSubmittedCode()));
+    public ResponseEntity<?> verifyTwoFactorCode(@RequestBody TwoFactorVerificationRequest request) {
+            return ResponseEntity.ok(authenticationService.verifyTwoFactorCode(
+                    request.getUsername(), request.getUserSubmittedCode()));
     }
 
     @CrossOrigin(origins = "https://localhost:4200")
     @PostMapping("/signup")
-    public ResponseEntity<UserEntity> signup(@RequestBody SignUpRequest signUpRequest) {
-        return ResponseEntity.ok(authenticationService.signup(signUpRequest));
+    public ResponseEntity<?> signup(@RequestBody SignUpRequest signUpRequest) {
+            return ResponseEntity.ok(authenticationService.signup(signUpRequest));
     }
 
     @CrossOrigin(origins = "https://localhost:4200")
