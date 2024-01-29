@@ -10,11 +10,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class VerificationCodeComponent {
   code: string = '';
 
+  ngOnInit(){
+    if (!this.authService.tempUsername) {
+      this.router.navigate(['/']); // Redirect to home or another route
+    }
+  }
+
   constructor(private authService: AuthService, private router: Router,private snackBar: MatSnackBar,private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
     
       const githubCode = params['code'];
       if (githubCode) {
+        authService.tempUsername = "GitHubTempUsername";
         this.router.navigate(['/verification']);
         this.authService.exchangeGitHubCodeForToken(githubCode).subscribe(
           response => {
@@ -28,6 +35,8 @@ export class VerificationCodeComponent {
             });
           }
         );
+      }else{
+        
       }
     });
   }
@@ -43,7 +52,7 @@ export class VerificationCodeComponent {
       },
       (error) => {
         this.snackBar.open("Invalid Verification Code!", 'Close', {
-          duration: 3000,
+          duration: 5000,
         });
       }
     );
