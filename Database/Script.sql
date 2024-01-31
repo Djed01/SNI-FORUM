@@ -71,9 +71,9 @@ ENGINE = InnoDB;
 create table if not exists `forum`.`user_permission` (
   `UserID` INT NOT NULL,
   `TopicID` INT NOT NULL,
-  `Add` TINYINT NOT NULL,
-  `Edit` TINYINT NOT NULL,
-  `Delete` TINYINT NOT NULL,
+  `AddPermission` TINYINT NOT NULL,
+  `EditPermission` TINYINT NOT NULL,
+  `DeletePermission` TINYINT NOT NULL,
   PRIMARY KEY (`UserID`, `TopicID`),
   INDEX `fk_permission_has_user_user1_idx` (`UserID` ASC) VISIBLE,
   INDEX `fk_user_permission_topic1_idx` (`TopicID` ASC) VISIBLE,

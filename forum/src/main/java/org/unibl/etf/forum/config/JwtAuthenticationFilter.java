@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter implements Ordered{
+public class JwtAuthenticationFilter extends OncePerRequestFilter{
     private final JwtService jwtService;
     private final UserService userService;
     private final TokenBlacklist tokenBlacklist;
@@ -55,10 +55,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter implements Ord
         filterChain.doFilter(request, response);
     }
 
-    @Override
-    public int getOrder() {
-        // This order should be after the Spring Security filter that processes standard authentication,
-        // but before the filter that handles authorization.
-        return Ordered.LOWEST_PRECEDENCE - 8; // You can adjust this number based on your needs
-    }
 }

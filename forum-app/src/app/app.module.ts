@@ -28,6 +28,8 @@ import { CommentRequestsComponent } from './comment-requests/comment-requests.co
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthConfig } from 'angular-oauth2-oidc';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -62,6 +64,9 @@ import { AuthConfig } from 'angular-oauth2-oidc';
     NoopAnimationsModule,
     MatDialogModule,
     MatMenuModule,
+    MatProgressBarModule,
+    BrowserModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  loading: boolean = false;
   username: string = "";
   password: string = "";
 
@@ -19,18 +20,21 @@ export class LoginComponent {
   ) {}
 
   login() {
+    this.loading = true;
     this.authService.login(this.username, this.password).subscribe(
       () => {
         console.log('Login Success');
+        this.router.navigate(['/verification']);
       },
       (error) => {
+        this.authService.tempUsername = null;
         console.error('Login failed', error);
         this.snackBar.open("Invalid Username or Password or Your Acount is Not Activated!", 'Close', {
           duration: 3000,
         });
       }
-    );
-    this.router.navigate(['/verification']);
+    ).add(() => this.loading = false);
+    
   }
 
   signInWithGitHub() {

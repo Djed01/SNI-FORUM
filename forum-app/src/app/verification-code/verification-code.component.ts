@@ -14,6 +14,7 @@ export class VerificationCodeComponent {
     if (!this.authService.tempUsername) {
       this.router.navigate(['/']); // Redirect to home or another route
     }
+    console.log(this.authService.tempUsername);
   }
 
   constructor(private authService: AuthService, private router: Router,private snackBar: MatSnackBar,private route: ActivatedRoute) {

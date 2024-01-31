@@ -25,7 +25,7 @@ public class WafFilter extends OncePerRequestFilter {
     private static final Pattern SQL_INJECTION_PATTERN = Pattern.compile(
             "('.+--)|(--)|(\\|)|(%7C)|(\\'\\s*OR\\s*\\d\\s*=\\s*\\d\\s*(--|#))|(\\b\\d+\\s+OR\\s+\\d+\\s*=\\s*\\d+\\s*(--|#))",
             Pattern.CASE_INSENSITIVE);
-    private static final Pattern XSS_PATTERN = Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE);
+    private static final Pattern XSS_PATTERN = Pattern.compile("<script", Pattern.CASE_INSENSITIVE);
     private static final int BUFFER_OVERFLOW_LIMIT = 10000;
     private static final Logger LOGGER = LoggerFactory.getLogger(WafFilter.class);
 

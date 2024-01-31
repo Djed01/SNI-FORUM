@@ -118,7 +118,7 @@ public class AuthenticationService {
         String redirectUri = "https://localhost:4200/verification";
 
         try {
-            // Construct the request URL
+            // Constructing the request URL
             URI uri = new URIBuilder("https://github.com/login/oauth/access_token")
                     .addParameter("client_id", clientId)
                     .addParameter("client_secret", clientSecret)
@@ -126,25 +126,25 @@ public class AuthenticationService {
                     .addParameter("redirect_uri", redirectUri)
                     .build();
 
-            // Create an HTTP POST request
+            // Creating an HTTP POST request
             HttpClient client = HttpClientBuilder.create().build();
             HttpPost postRequest = new HttpPost(uri);
             postRequest.setEntity(new StringEntity("", ContentType.APPLICATION_FORM_URLENCODED));
 
-            // Send the request and get the response
+            // Sending the request and get the response
             HttpResponse response = client.execute(postRequest);
 
-            // Get the response body as a string
+            // Getting the response body as a string
             HttpEntity entity = response.getEntity();
             String responseBody = EntityUtils.toString(entity);
 
-            // Extract the access token from the response body
+            // Extracting the access token from the response body
             String accessToken = extractAccessToken(responseBody);
 
-            // Use the access token to fetch user details
+            // Using the access token to fetch user details
             String userDetails = getUserDetails(accessToken);
 
-            // Extract the login field value from the user details
+            // Extracting the login field value from the user details
             String email = extractEmail(userDetails);
 
             Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
@@ -160,7 +160,7 @@ public class AuthenticationService {
                            throw new AccountNotActivatedException("Account not activated!");
                        }
                    }else{
-                       // Save the new user
+                       // Saving the new user
                        UserEntity newUser = new UserEntity();
                        newUser.setEmail(email);
                        newUser.setUsername(extractUsername(userDetails));
@@ -191,19 +191,19 @@ public class AuthenticationService {
         URI uri = new URIBuilder("https://api.github.com/user")
                 .build();
 
-        // Create an HTTP GET request
+        // Creating an HTTP GET request
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet getRequest = new HttpGet(uri);
         getRequest.setHeader("Authorization", "Bearer " + accessToken);
 
-        // Send the request and get the response
+        // Sending the request and get the response
         HttpResponse response = client.execute(getRequest);
 
-        // Get the response body as a string
+        // Getting the response body as a string
         HttpEntity entity = response.getEntity();
         String responseBody = EntityUtils.toString(entity);
 
-        // Return the response body to the caller
+        // Returning the response body to the caller
         return responseBody;
     }
 
@@ -213,7 +213,7 @@ public class AuthenticationService {
         if (jsonObject.has("email")) {
             return jsonObject.get("email").getAsString();
         }
-        return null; // Return null if the login field is not present
+        return null; // Returns null if the login field is not present
     }
 
     private String extractUsername(String userDetails) {
@@ -222,7 +222,7 @@ public class AuthenticationService {
         if (jsonObject.has("login")) {
             return jsonObject.get("login").getAsString();
         }
-        return null; // Return null if the login field is not present
+        return null; // Returns null if the login field is not present
     }
 
 
