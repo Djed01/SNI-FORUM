@@ -1,5 +1,6 @@
 package org.unibl.etf.forum.config;
 
+import com.github.rkpunjal.sqlsafe.SqlSafeUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -132,14 +133,19 @@ public class WafFilter extends OncePerRequestFilter {
         try {
             ServletInputStream inputStream = request.getInputStream();
             String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-            return isMaliciousValue(body);
+            return isMaliciousBody(body);
         } catch (IOException e) {
             throw new RuntimeException("Error reading request body", e);
         }
     }
 
+    public boolean isMaliciousBody(String value){
+        return !SqlSafeUtil.isSqlInjectionSafe(value) || XSS_PATTERN.matcher(value).find() || value.length()>BUFFER_OVERFLOW_LIMIT;
+    }
     public boolean isMaliciousValue(String value) {
+
         return SQL_INJECTION_PATTERN.matcher(value).find() || XSS_PATTERN.matcher(value).find() || value.length()>BUFFER_OVERFLOW_LIMIT;
+
     }
 
 }
